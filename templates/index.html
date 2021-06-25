@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <script src="/static/jquery-1.12.4.min.js"></script>
+    <script src="/static/echarts.js"></script>
+    <script src="/static/socket.io.js"></script>
+</head>
+<body>
+
+    <div style="padding:5px;text-align: center;">
+        <div><span id="timestamp"> </span> <span id="date"></span></div>
+        <img id="frame" src="" alt="" style="width:auto;max-width: 1000px;margin:0 auto;">
+    </div>
+
+    <script>
+        let live_socket = io('/live', {autoConnect: false});
+        function live_mode() {
+        live_socket.open();
+        live_socket.on('frame', function (msg) {
+            let blob = new Blob([msg], {type: 'image/jpeg'});
+            document.getElementById('frame').src = window.URL.createObjectURL(blob);
+        });}
+
+    </script>
+
+
+
+</body>
+</html>
